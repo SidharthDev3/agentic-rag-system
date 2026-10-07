@@ -149,7 +149,9 @@ export function FileUploadZone({ onUploadSuccess, onAddToast }: FileUploadZonePr
                   <CheckCircle className="w-4 h-4 text-emerald-400" />
                 )}
                 {item.status === "error" && (
-                  <AlertCircle className="w-4 h-4 text-red-400" title={item.error} />
+                  <span title={item.error}>
+                    <AlertCircle className="w-4 h-4 text-red-400" />
+                  </span>
                 )}
                 {item.status === "pending" && (
                   <Loader2 className="w-4 h-4 text-slate-600 animate-spin" />
@@ -170,4 +172,3 @@ export function FileUploadZone({ onUploadSuccess, onAddToast }: FileUploadZonePr
     </div>
   );
 }
-
