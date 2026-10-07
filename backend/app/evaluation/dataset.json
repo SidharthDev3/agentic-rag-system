@@ -1,0 +1,52 @@
+[
+  {
+    "id": "eval-1",
+    "query": "How does NexusRAG combine dense vector search with sparse keyword search?",
+    "category": "factual",
+    "expected_relevant_doc": "architecture_decisions.md",
+    "expected_keywords": ["hybrid", "reciprocal rank fusion", "rrf", "dense", "sparse", "cross-encoder"],
+    "requires_retrieval": true
+  },
+  {
+    "id": "eval-2",
+    "query": "Compare dense semantic retrieval with keyword search in terms of precision and vocabulary mismatch.",
+    "category": "comparison",
+    "expected_relevant_doc": "rag_techniques_survey.md",
+    "expected_keywords": ["dense", "keyword", "vocabulary mismatch", "precision", "embeddings"],
+    "requires_retrieval": true
+  },
+  {
+    "id": "eval-3",
+    "query": "Summarize the primary consensus algorithms used in distributed fault-tolerant systems.",
+    "category": "summarization",
+    "expected_relevant_doc": "distributed_systems_guide.txt",
+    "expected_keywords": ["raft", "paxos", "consensus", "leader election", "log replication"],
+    "requires_retrieval": true
+  },
+  {
+    "id": "eval-4",
+    "query": "What are the key trade-offs between two-phase commit (2PC) and saga patterns in microservices?",
+    "category": "analytical",
+    "expected_relevant_doc": "distributed_systems_guide.txt",
+    "expected_keywords": ["2pc", "saga", "eventual consistency", "coordinator", "rollback"],
+    "requires_retrieval": true
+  },
+  {
+    "id": "eval-5",
+    "query": "What is the secret recipe for Martian space gelato on the Neptune base?",
+    "category": "out_of_domain",
+    "expected_relevant_doc": null,
+    "expected_keywords": [],
+    "requires_retrieval": true,
+    "expect_unanswerable": true
+  },
+  {
+    "id": "eval-6",
+    "query": "Hello there, how are you doing today?",
+    "category": "conversational",
+    "expected_relevant_doc": null,
+    "expected_keywords": [],
+    "requires_retrieval": false
+  }
+]
+

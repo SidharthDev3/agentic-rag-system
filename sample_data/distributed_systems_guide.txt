@@ -1,0 +1,34 @@
+Distributed Systems Engineering Handbook
+
+1. Overview of Consensus Protocols
+In distributed systems, consensus protocols ensure that multiple nodes agree on a single data value or state transition, even in the presence of network partitions and node crashes. The two most prominent consensus protocols are Paxos and Raft.
+
+1.1 Raft Consensus
+Raft was specifically designed to be more understandable than Paxos while offering equivalent safety guarantees. Raft decomposes consensus into three independent sub-problems:
+- Leader Election: A randomized election timer triggers heartbeat timeouts. A candidate requests votes; when it wins a majority (quorum = N/2 + 1), it becomes the leader.
+- Log Replication: The leader accepts client commands, appends them to its log, and replicates log entries across follower nodes. Once replicated to a quorum, entries are committed.
+- Safety: If a server has applied an entry at a given index, no other server will ever apply a different entry for that index.
+
+1.2 Paxos Consensus
+Paxos guarantees safety under asynchronous network conditions where messages may be delayed or reordered. However, multi-decree Paxos is notoriously difficult to implement correctly in production due to complex edge cases in leader election and state machine log compaction.
+
+2. Distributed Transactions: Two-Phase Commit vs Saga Pattern
+When coordinating state changes across multiple microservices or distributed partitions, architectures face a choice between strict consistency and high availability.
+
+2.1 Two-Phase Commit (2PC)
+- Phase 1 (Prepare): The transaction coordinator asks all participant nodes whether they can commit their respective local changes. Participants lock resources and respond with YES or NO.
+- Phase 2 (Commit/Abort): If all participants vote YES, the coordinator sends COMMIT. If any vote NO or timeout, it sends ROLLBACK.
+- Trade-offs: 2PC is a blocking protocol. If the coordinator crashes while participants hold locks, the system stalls. It reduces throughput and availability under network partitions.
+
+2.2 The Saga Pattern
+- A saga is a sequence of local transactions. Each transaction updates data within a single service and publishes an event or message.
+- If a step fails, the saga executes compensating transactions in reverse order to undo earlier changes.
+- Trade-offs: Avoids distributed locks, offering high throughput and eventual consistency. However, it requires careful modeling of compensating actions and cannot guarantee isolation (ACID 'I').
+
+3. The CAP Theorem and PACELC Extension
+The CAP Theorem states that a distributed data store can simultaneously provide at most two out of three guarantees: Consistency, Availability, and Partition Tolerance.
+Since network partitions are inevitable in real-world networks, distributed systems must trade off Consistency vs Availability during a partition.
+The PACELC theorem expands this:
+If there is a Partition (P), how does the system trade off Availability (A) versus Consistency (C)?
+Else (E), when the system is running normally without partitions, how does it trade off Latency (L) versus Consistency (C)?
+
